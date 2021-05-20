@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "Data Science Notebooks"
+version = "0.0.1"
+description = "Data Science Notebooks"
+authors = ["Tom Porter"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+matplotlib = "^3.4.1"
+numpy = "^1.19.4"
+pandas = "^1.2.4"
+scikit-learn = "^0.24.2"
+seaborn = "^0.11.1"
+pyspark = "^3.1.1"
+pymc3 = "^3.11.2"
+shap = "^0.39.0"
+
+
+[tool.poetry.dev-dependencies]
+jupyter = "^1.0.0"
+jupyterlab = "^3.0.14"
+pytest = "^6.2.3"
+Sphinx = "^3.5.4"
+pylint = "^2.8.2"
+black = "^21.4b2"
+nb-black = "^1.0.7"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
