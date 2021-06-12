@@ -4,18 +4,16 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.166.1/containers/docker-existing-dockerfile
 {
-	"name": "Existing Dockerfile",
+	"name": "Development container",
 
 	// Sets the run context to one level up instead of the .devcontainer folder.
-	"build": {
-		"context": "..",
-		"dockerfile": "../Dockerfile",
-		"target": "development"
-	},
+	"dockerComposeFile": "../docker-compose.yml",
+	"service": "jupyter",
+	"workspaceFolder": "/home/standard/project",
 
 	// Set *default* container specific settings.json values on container create.
 	"settings": { 
-		"terminal.integrated.defaultProfile.linux": "/bin/bash",
+		"terminal.integrated.defaultProfile.linux": "bash",
 		"terminal.integrated.scrollback": 10000,
 		"python.pythonPath": "/opt/pysetup/.venv/bin/python",
 		"python.languageServer": "Pylance",
@@ -51,7 +49,7 @@
 	"forwardPorts": [8888],
 
 	// Uncomment the next line to run commands after the container is created - for example installing curl.
-	"postCreateCommand": "JUPYTER_TOKEN=vscode jupyter lab --port=8888 --ip=0.0.0.0 --no-browser &",
+	// "postCreateCommand": "JUPYTER_TOKEN=vscode jupyter lab --port=8888 --ip=0.0.0.0 --no-browser &",
 
 	// Uncomment when using a ptrace-based debugger like C++, Go, and Rust
 	// "runArgs": [ "--net=host" ],
