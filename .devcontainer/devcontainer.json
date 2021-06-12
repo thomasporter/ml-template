@@ -1,3 +1,6 @@
+// Copyright (C) Tom Porter
+// Distributed under the MIT license (see LICENSE for details)
+
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.166.1/containers/docker-existing-dockerfile
 {

@@ -1,5 +1,5 @@
-# Copyright (c) Tom Porter
-# Distributed under the MIT License (see LICENSE for details)
+# Copyright (C) Tom Porter
+# Distributed under the MIT license (see LICENSE for details)
 
 
 ##################################################
