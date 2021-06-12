@@ -1,0 +1,53 @@
+// Copyright (C) Tom Porter
+// Distributed under the MIT license (see LICENSE for details)
+
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        // Build and tag all dockerfile targets
+        {
+            "label": "Build Ubuntu",
+            "type": "docker-build",
+            "dockerBuild": {
+                "context": ".",
+                "dockerfile": "Dockerfile",
+                "target": "ubuntu-base",
+                "tag": "thestatskid/ubuntu:latest",
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Build Python",
+            "type": "docker-build",
+            "dockerBuild": {
+                "context": ".",
+                "dockerfile": "Dockerfile",
+                "target": "python-base",
+                "tag": "thestatskid/python:latest",
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Build Development",
+            "type": "docker-build",
+            "dockerBuild": {
+                "context": ".",
+                "dockerfile": "Dockerfile",
+                "target": "development",
+                "tag": "thestatskid/jupyter:latest",
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+    ]
+}

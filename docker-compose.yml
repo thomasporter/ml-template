@@ -1,0 +1,39 @@
+# Copyright (C) Tom Porter
+# Distributed under the MIT license (see LICENSE for details)
+
+version: "3.8"
+
+services:
+    jupyter:
+        # Run the VSCode tasks to build and tag all
+        # stages of the multi-stage dockerfile
+        image: thestatskid/jupyter:latest
+        container_name: jupyter         # or project name
+        build:
+            context: .
+            dockerfile: Dockerfile
+            target: development
+            # labels:
+        
+        # ensure that jupyter enters the appropriate
+        # directory
+        working_dir: /home/standard/project
+
+        stdin_open: true        # interactive
+        tty: true               # terminal
+        restart: unless-stopped
+        
+        command: bash -c 'source /opt/pysetup/.venv/bin/activate && jupyter lab --port=8888 --ip=0.0.0.0 --no-browser'
+        
+        environment:
+            JUPYTER_TOKEN: token        # default jupyter token for login
+        
+        ports:
+            - 8888:8888
+
+        volumes:
+            # mount project dir to working dir
+            - ./:/home/standard/project
+
+# TODO: secrets if any
+# secrets:
