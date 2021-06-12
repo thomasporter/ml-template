@@ -131,6 +131,10 @@ RUN mv /tmp/spark-${APACHE_SPARK_VERSION}-bin-hadoop${HADOOP_VERSION} ${SPARK_HO
 # 
 FROM ubuntu-base AS python-base
 
+
+# fix permissions of /opt 
+COPY --chown=standard:standard --from=ubuntu-base /opt /opt
+
 # libraries required for pymc3
 RUN apt-get update && apt-get install -y --no-install-recommends \
     # pymc3
@@ -145,6 +149,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 ENV LLVM_CONFIG=/usr/bin/llvm-config-10
 
+# install packages as standard user
+USER $USERNAME
 WORKDIR $PYSETUP_PATH
 COPY pyproject.toml poetry.lock ./
 RUN poetry install --no-dev
@@ -162,21 +168,22 @@ ENV VIRTUAL_ENV=${POETRY_VIRTUALENVS_PATH}
 #
 FROM python-base AS development
 
-# copy in our built poetry + venv
-COPY --chown=standard:standard --from=python-base /opt /opt
-
 # add nodejs for Jupyter Lab extensions
+USER root
 RUN apt-get update \
     && curl -sL https://deb.nodesource.com/setup_14.x | sudo bash - \
     && apt-get install -y --no-install-recommends nodejs
 
 # TODO: jupyter lab extension installation
+# TODO: add src to python path
 
-# quicker install as runtime deps are already installed
+# install dev packages
+# note: the installation of all non-dev packages in the parent image
+#       results in a faster build stage.
+USER $USERNAME
 WORKDIR $PYSETUP_PATH
 RUN poetry install
 
-USER $USERNAME
 
 ENTRYPOINT ["tini", "--"]
-CMD ["jupyter lab --port=8888 --ip=0.0.0.0 --token=token"]
+CMD ["jupyter", "lab", "--port=8888", "--ip=0.0.0.0", "--token=token"]
